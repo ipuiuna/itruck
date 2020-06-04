@@ -1,10 +1,11 @@
 import React from "react";
 //import Login from "./pages/Login";
-import HomeCostumer from "./pages/HomeCostumer";
+//import HomeCostumer from "./pages/HomeCostumer";
+import AdDetail from "./pages/AdDetail";
 import { StyleSheet } from "react-native";
 
 export default function App() {
-  return <HomeCostumer />;
+  return <AdDetail />;
 }
 
 const styles = StyleSheet.create({
