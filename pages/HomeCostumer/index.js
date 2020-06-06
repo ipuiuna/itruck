@@ -17,8 +17,8 @@ const HomeCostumer = () => {
       </View>
       <ScrollView style={styles.wrapper}>
         {mockData.map((item, idx) => (
-          <View>
-            <Ad data={item} key={idx} />
+          <View key={idx}>
+            <Ad data={item} />
           </View>
         ))}
       </ScrollView>
@@ -26,7 +26,6 @@ const HomeCostumer = () => {
         <TouchableOpacity
           activeOpacity={0.5}
           style={{
-            backgroundColor: "pink",
             height: 60,
             width: 60,
             borderRadius: 64,

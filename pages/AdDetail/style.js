@@ -32,9 +32,8 @@ const styles = StyleSheet.create({
     height,
   },
   wrapper: {
-    flex: 0.78,
-    marginLeft: 10,
-    marginRight: 10,
+    flex: 0.9,
+    margin: 8,
     backgroundColor: "#7ea6f8",
     borderRadius: 8,
   },

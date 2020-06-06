@@ -8,11 +8,11 @@ import mockData from "./mockData";
 const AdDetail = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.markWrap}>
+      {/* <View style={styles.markWrap}>
         <Text style={styles.titlePrimary}>
           D<Text style={styles.titleSecondarty}>etalhes</Text>
         </Text>
-      </View>
+      </View> */}
       <View style={styles.wrapper}>
         <Text style={styles.titleSecondarty}>Batata</Text>
         <View
@@ -65,8 +65,8 @@ const AdDetail = () => {
             }}
           >
             {mockData.map((item, idx) => (
-              <View style={{ borderRadius: 8 }}>
-                <Bid data={item} key={idx} />
+              <View key={idx} style={{ borderRadius: 8 }}>
+                <Bid data={item} />
               </View>
             ))}
           </ScrollView>
