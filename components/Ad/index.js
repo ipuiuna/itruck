@@ -52,33 +52,3 @@ const Ad = (props) => {
 };
 
 export default Ad;
-
-{
-  /* <View style={styles.markWrap}>
-<Text style={styles.titlePrimary}>
-  M<Text style={styles.titleSecondarty}>eus</Text>
-  <Text style={styles.titlePrimary}> A</Text>
-  <Text style={styles.titleSecondarty}>núncios</Text>
-</Text>
-</View>
-<ScrollView style={styles.wrapper}>
-<Text style={{ color: "#fff", backgroundColor: "blue", margin: 8 }}>
-  Meus anuncios
-</Text>
-</ScrollView>
-<View style={styles.plusButtonArea}>
-<TouchableOpacity
-  activeOpacity={0.5}
-  style={{
-    backgroundColor: "pink",
-    height: 60,
-    width: 60,
-    borderRadius: 64,
-  }}
->
-  <View style={styles.button}>
-    <Icon style={styles.icon} name="plus" />
-  </View>
-</TouchableOpacity>
-</View> */
-}

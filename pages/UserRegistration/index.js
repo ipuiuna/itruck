@@ -17,14 +17,14 @@ export default function UserRegistration() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.markWrap}>
+      {/* <View style={styles.markWrap}>
         <Text style={styles.titlePrimary}>
           N<Text style={styles.titleSecondarty}>ovo </Text>
           <Text style={styles.titlePrimary}>
             U<Text style={styles.titleSecondarty}>suário</Text>
           </Text>
         </Text>
-      </View>
+      </View> */}
       <View style={styles.wrapper}>
         <View style={styles.inputWrap}>
           <TextInput
