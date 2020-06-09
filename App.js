@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Alert } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
@@ -7,12 +8,11 @@ import {
   DrawerItem,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import Firebase from "./config/firebaseConfig";
 import Login from "./pages/Login";
 import HomeCostumer from "./pages/HomeCostumer";
 import HomeDriver from "./pages/HomeDriver";
-import AdDetail from "./pages/AdDetail";
 import UserRegistration from "./pages/UserRegistration";
+import NewAd from "./pages/NewAd";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -49,8 +49,21 @@ function App() {
                 <DrawerItem
                   label="Logout"
                   onPress={() => {
-                    setLogin(false);
-                    setUser({});
+                    Alert.alert("Sair", "Deseja realmente sair?", [
+                      {
+                        text: "sim",
+                        onPress: () => {
+                          setLogin(false);
+                          setUser({});
+                        },
+                      },
+                      {
+                        text: "não",
+                        onPress: () => {
+                          return;
+                        },
+                      },
+                    ]);
                   }}
                 />
               </DrawerContentScrollView>
@@ -58,10 +71,26 @@ function App() {
           }}
         >
           <Drawer.Screen
-            name={"Home"}
+            name={user.tipo === "C" ? "HomeCostumer" : "HomeDriver"}
             component={user.tipo === "C" ? HomeCostumer : HomeDriver}
+            options={{ title: "Home" }}
             initialParams={{ user }}
           />
+          <Drawer.Screen
+            name="NewAd"
+            component={NewAd}
+            initialParams={{ user }}
+            options={{
+              title: "Criar anúncio",
+              headerStyle: {
+                backgroundColor: "#f4511e",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          ></Drawer.Screen>
         </Drawer.Navigator>
       )}
     </NavigationContainer>

@@ -5,9 +5,8 @@ import Firebase from "../../config/firebaseConfig";
 import AdDriver from "../../components/AdDriver";
 import styles from "./style";
 
-const HomeDriver = () => {
+const HomeDriver = (props) => {
   const [list, setList] = useState([]);
-
   const fetchData = async () => {
     Firebase.database()
       .ref(`todosanuncios`)
@@ -40,7 +39,7 @@ const HomeDriver = () => {
           </View>
         ))}
       </ScrollView>
-      <View style={styles.plusButtonArea}>
+      {/* <View style={styles.plusButtonArea}>
         <TouchableOpacity
           activeOpacity={0.5}
           style={{
@@ -53,7 +52,7 @@ const HomeDriver = () => {
             <Icon style={styles.icon} name="plus" />
           </View>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 };

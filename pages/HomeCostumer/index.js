@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Ad from "../../components/Ad";
 import styles from "./style";
-import mockData from "./mockData";
 
-const HomeCostumer = () => {
+const HomeCostumer = (props) => {
+  const [list, setList] = useState([]);
+  const [rows, setRows] = useState(props.route.params.user.anuncios);
+  const { id } = props.route.params.user;
+
+  const fetchData = () => {
+    const newList = [];
+    Object.keys(rows).map((key) => {
+      newList.push(rows[key]);
+    });
+    setList(newList);
+  };
+
+  useEffect(() => {
+    if (rows) {
+      fetchData();
+    }
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.markWrap}>
@@ -16,11 +33,22 @@ const HomeCostumer = () => {
         </Text>
       </View>
       <ScrollView style={styles.wrapper}>
-        {mockData.map((item, idx) => (
-          <View key={idx}>
-            <Ad data={item} />
-          </View>
-        ))}
+        {list.length >= 1 ? (
+          list.map((item, idx) => (
+            <View key={idx}>
+              <Ad data={item} />
+            </View>
+          ))
+        ) : (
+          <Text
+            style={{
+              marginTop: 50,
+              textAlign: "center",
+            }}
+          >
+            Você não tem anúncios criados
+          </Text>
+        )}
       </ScrollView>
       <View style={styles.plusButtonArea}>
         <TouchableOpacity
@@ -29,6 +57,9 @@ const HomeCostumer = () => {
             height: 60,
             width: 60,
             borderRadius: 64,
+          }}
+          onPress={() => {
+            props.navigation.navigate("NewAd", { id });
           }}
         >
           <View style={styles.button}>
