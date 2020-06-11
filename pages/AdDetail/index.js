@@ -5,14 +5,17 @@ import styles from "./style";
 import Bid from "../../components/Bid";
 import mockData from "./mockData";
 
-const AdDetail = () => {
+const AdDetail = (props) => {
+  const { idItem } = props.route.params;
+  console.log("idItem ", idItem);
+
   return (
     <View style={styles.container}>
-      {/* <View style={styles.markWrap}>
+      <View style={styles.markWrap}>
         <Text style={styles.titlePrimary}>
           D<Text style={styles.titleSecondarty}>etalhes</Text>
         </Text>
-      </View> */}
+      </View>
       <View style={styles.wrapper}>
         <Text style={styles.titleSecondarty}>Batata</Text>
         <View

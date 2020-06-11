@@ -13,6 +13,7 @@ import HomeCostumer from "./pages/HomeCostumer";
 import HomeDriver from "./pages/HomeDriver";
 import UserRegistration from "./pages/UserRegistration";
 import NewAd from "./pages/NewAd";
+import AdDetail from "./pages/AdDetail";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -90,7 +91,8 @@ function App() {
                 fontWeight: "bold",
               },
             }}
-          ></Drawer.Screen>
+          />
+          <Drawer.Screen name="AdDetail" component={AdDetail} />
         </Drawer.Navigator>
       )}
     </NavigationContainer>

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, TouchableOpacity, ScrollView } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
 import Firebase from "../../config/firebaseConfig";
 import AdDriver from "../../components/AdDriver";
 import styles from "./style";
 
 const HomeDriver = (props) => {
   const [list, setList] = useState([]);
-  const fetchData = async () => {
+
+  const fetchData = () => {
     Firebase.database()
       .ref(`todosanuncios`)
       .on("value", (snapshot) => {
@@ -22,7 +22,7 @@ const HomeDriver = (props) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [list]);
 
   return (
     <View style={styles.container}>
@@ -39,20 +39,6 @@ const HomeDriver = (props) => {
           </View>
         ))}
       </ScrollView>
-      {/* <View style={styles.plusButtonArea}>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={{
-            height: 60,
-            width: 60,
-            borderRadius: 64,
-          }}
-        >
-          <View style={styles.button}>
-            <Icon style={styles.icon} name="plus" />
-          </View>
-        </TouchableOpacity>
-      </View> */}
     </View>
   );
 };

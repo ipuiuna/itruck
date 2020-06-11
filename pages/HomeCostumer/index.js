@@ -9,17 +9,9 @@ const HomeCostumer = (props) => {
   const [rows, setRows] = useState(props.route.params.user.anuncios);
   const { id } = props.route.params.user;
 
-  const fetchData = () => {
-    const newList = [];
-    Object.keys(rows).map((key) => {
-      newList.push(rows[key]);
-    });
-    setList(newList);
-  };
-
   useEffect(() => {
     if (rows) {
-      fetchData();
+      setList(rows);
     }
   }, []);
 
@@ -33,10 +25,15 @@ const HomeCostumer = (props) => {
         </Text>
       </View>
       <ScrollView style={styles.wrapper}>
-        {list.length >= 1 ? (
-          list.map((item, idx) => (
+        {Object.keys(list).length >= 1 ? (
+          Object.keys(list).map((item, idx) => (
             <View key={idx}>
-              <Ad data={item} />
+              <Ad
+                data={rows[item]}
+                idItem={item}
+                navigation={props.navigation}
+                userId={id}
+              />
             </View>
           ))
         ) : (

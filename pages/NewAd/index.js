@@ -1,45 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import Firebase from "../../config/firebaseConfig";
 import styles from "./style";
 
 export default function NewAd(props) {
   const { id } = props.route.params;
-  const [titulo, setTitulo] = useState();
-  const [peso, setPeso] = useState();
-  const [quantidade, setQuantidade] = useState();
-  const [origem, setOrigem] = useState();
-  const [destino, setDestino] = useState();
+  const [newAd, setNewAd] = useState({
+    titulo: "",
+    peso: "",
+    quantidade: "",
+    origem: "",
+    destino: "",
+  });
 
-  const insertNewAd = () => {
+  const insertNewAd = async () => {
     if (
-      titulo === undefined ||
-      titulo === "" ||
-      peso === undefined ||
-      peso === "" ||
-      quantidade === undefined ||
-      quantidade === "" ||
-      origem === undefined ||
-      origem === "" ||
-      destino === undefined ||
-      destino === ""
+      !newAd.titulo ||
+      !newAd.peso ||
+      !newAd.quantidade ||
+      !newAd.origem ||
+      !newAd.destino
     ) {
       Alert.alert("Erro", "Preencha todos dados");
-      props.navigation.reset({
-        index: 0,
-        routes: [{ name: "HomeCostumer" }],
-      });
     } else {
-      Firebase.database().ref(`usuarios/${id}/anuncios`).push({
-        titulo,
-        peso,
-        quantidade,
-        origem,
-        destino,
-      });
+      const key = await Firebase.database()
+        .ref(`usuarios/${id}/anuncios`)
+        .push(newAd)
+        .getKey();
+      Firebase.database().ref(`todosanuncios/${key}`).set(newAd);
       props.navigation.reset({
         index: 0,
-        routes: [{ name: "HomeCostumer" }],
+        routes: [{ name: "NewAd" }],
       });
     }
   };
@@ -57,11 +48,13 @@ export default function NewAd(props) {
         <View style={styles.inputWrap}>
           <TextInput
             placeholder="título"
-            name="titulo"
             placeholderTextColor="#c4c4c4"
             style={styles.input}
             onChangeText={(text) => {
-              setTitulo(text);
+              setNewAd({
+                ...newAd,
+                titulo: text,
+              });
             }}
           />
         </View>
@@ -72,7 +65,10 @@ export default function NewAd(props) {
               placeholderTextColor="#c4c4c4"
               style={styles.input}
               onChangeText={(text) => {
-                setPeso(text);
+                setNewAd({
+                  ...newAd,
+                  peso: text,
+                });
               }}
             />
           </View>
@@ -82,7 +78,10 @@ export default function NewAd(props) {
               placeholderTextColor="#c4c4c4"
               style={styles.input}
               onChangeText={(text) => {
-                setQuantidade(text);
+                setNewAd({
+                  ...newAd,
+                  quantidade: text,
+                });
               }}
             />
           </View>
@@ -92,7 +91,10 @@ export default function NewAd(props) {
               placeholder="origem"
               style={styles.input}
               onChangeText={(text) => {
-                setOrigem(text);
+                setNewAd({
+                  ...newAd,
+                  origem: text,
+                });
               }}
             />
           </View>
@@ -102,7 +104,10 @@ export default function NewAd(props) {
               placeholder="destino"
               style={styles.input}
               onChangeText={(text) => {
-                setDestino(text);
+                setNewAd({
+                  ...newAd,
+                  destino: text,
+                });
               }}
             />
           </View>

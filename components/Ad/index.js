@@ -1,10 +1,16 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./style";
+import Firebase from "../../config/firebaseConfig";
 
 const Ad = (props) => {
-  const { titulo, destino, origem, peso, quantidade } = props.data;
+  const {
+    navigation,
+    idItem,
+    userId,
+    data: { titulo, destino, origem, peso, quantidade },
+  } = props;
   return (
     <View
       style={{
@@ -16,22 +22,36 @@ const Ad = (props) => {
       <View style={styles.container}>
         <Text style={styles.text}>{titulo}</Text>
         <View style={{ flexDirection: "row" }}>
-          <Icon
-            name="pencil"
-            style={{
-              fontSize: 30,
-              color: "#000",
-              margin: 8,
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("AdDetail", { idItem });
             }}
-          />
-          <Icon
-            name="trash-o"
-            style={{
-              fontSize: 30,
-              color: "#000",
-              margin: 8,
+          >
+            <Icon
+              name="pencil"
+              style={{
+                fontSize: 30,
+                color: "#000",
+                margin: 8,
+              }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              Firebase.database()
+                .ref(`usuarios/${userId}/anuncios/${idItem}`)
+                .remove();
             }}
-          />
+          >
+            <Icon
+              name="trash-o"
+              style={{
+                fontSize: 30,
+                color: "#000",
+                margin: 8,
+              }}
+            />
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.container}>
