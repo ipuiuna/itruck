@@ -2,26 +2,30 @@ import React, { useState } from "react";
 import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import Firebase from "../../config/firebaseConfig";
 import styles from "./style";
+import FirebaseService from "../../services/firebase.services";
 
 export default function LoginScreen(props) {
   const { navigation } = props;
   const [email, setEmail] = useState(__DEV__ ? "eu@aqui.com.br" : "");
   const [password, setPassword] = useState(__DEV__ ? "123456789" : "");
 
-  const handleLogin = async () => {
+  const handleLogin = () => {
     Firebase.auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        props.route.params.setLogin(true);
         Firebase.auth().onAuthStateChanged((user) => {
           Firebase.database()
             .ref(`usuarios/${user.uid}`)
             .on("value", (snapshot) => {
               props.route.params.setUser(snapshot.val());
+              props.route.params.setLogin(true);
             });
         });
       })
-      .catch((error) => Alert.alert("Erro", "Usuário ou senha inválidos."));
+      .catch((error) => {
+        Alert.alert("Erro", "Usuário ou senha inválidos.");
+        console.log("error: ", error);
+      });
   };
 
   return (

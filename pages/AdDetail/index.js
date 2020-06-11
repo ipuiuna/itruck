@@ -6,7 +6,7 @@ import Bid from "../../components/Bid";
 import mockData from "./mockData";
 
 const AdDetail = (props) => {
-  const { idItem } = props.route.params;
+  const idItem = props.route.params?.idItem;
   console.log("idItem ", idItem);
 
   return (

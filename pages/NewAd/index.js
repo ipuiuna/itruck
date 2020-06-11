@@ -4,7 +4,8 @@ import Firebase from "../../config/firebaseConfig";
 import styles from "./style";
 
 export default function NewAd(props) {
-  const { id } = props.route.params;
+  const { userId } = props.route.params;
+  console.log("user number: ", userId);
   const [newAd, setNewAd] = useState({
     titulo: "",
     peso: "",
@@ -24,7 +25,7 @@ export default function NewAd(props) {
       Alert.alert("Erro", "Preencha todos dados");
     } else {
       const key = await Firebase.database()
-        .ref(`usuarios/${id}/anuncios`)
+        .ref(`usuarios/${userId}/anuncios`)
         .push(newAd)
         .getKey();
       Firebase.database().ref(`todosanuncios/${key}`).set(newAd);

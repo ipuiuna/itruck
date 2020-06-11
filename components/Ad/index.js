@@ -41,6 +41,7 @@ const Ad = (props) => {
               Firebase.database()
                 .ref(`usuarios/${userId}/anuncios/${idItem}`)
                 .remove();
+              Firebase.database().ref(`todosanuncios/${idItem}`).remove();
             }}
           >
             <Icon

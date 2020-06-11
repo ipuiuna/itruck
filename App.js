@@ -21,6 +21,7 @@ const Drawer = createDrawerNavigator();
 function App() {
   const [login, setLogin] = useState(false);
   const [user, setUser] = useState({});
+
   return (
     <NavigationContainer>
       {!login ? (
@@ -41,59 +42,61 @@ function App() {
           />
         </Stack.Navigator>
       ) : (
-        <Drawer.Navigator
-          initialRouteName={user.tipo === "C" ? "HomeCustumer" : "HomeDriver"}
-          drawerContent={(props) => {
-            return (
-              <DrawerContentScrollView {...props}>
-                <DrawerItemList {...props} />
-                <DrawerItem
-                  label="Logout"
-                  onPress={() => {
-                    Alert.alert("Sair", "Deseja realmente sair?", [
-                      {
-                        text: "sim",
-                        onPress: () => {
-                          setLogin(false);
-                          setUser({});
+        <>
+          <Drawer.Navigator
+            initialRouteName={user.tipo === "C" ? "HomeCustumer" : "HomeDriver"}
+            drawerContent={(props) => {
+              return (
+                <DrawerContentScrollView {...props}>
+                  <DrawerItemList {...props} />
+                  <DrawerItem
+                    label="Logout"
+                    onPress={() => {
+                      Alert.alert("Sair", "Deseja realmente sair?", [
+                        {
+                          text: "sim",
+                          onPress: () => {
+                            setLogin(false);
+                            setUser({});
+                          },
                         },
-                      },
-                      {
-                        text: "não",
-                        onPress: () => {
-                          return;
+                        {
+                          text: "não",
+                          onPress: () => {
+                            return;
+                          },
                         },
-                      },
-                    ]);
-                  }}
-                />
-              </DrawerContentScrollView>
-            );
-          }}
-        >
-          <Drawer.Screen
-            name={user.tipo === "C" ? "HomeCostumer" : "HomeDriver"}
-            component={user.tipo === "C" ? HomeCostumer : HomeDriver}
-            options={{ title: "Home" }}
-            initialParams={{ user }}
-          />
-          <Drawer.Screen
-            name="NewAd"
-            component={NewAd}
-            initialParams={{ user }}
-            options={{
-              title: "Criar anúncio",
-              headerStyle: {
-                backgroundColor: "#f4511e",
-              },
-              headerTintColor: "#fff",
-              headerTitleStyle: {
-                fontWeight: "bold",
-              },
+                      ]);
+                    }}
+                  />
+                </DrawerContentScrollView>
+              );
             }}
-          />
-          <Drawer.Screen name="AdDetail" component={AdDetail} />
-        </Drawer.Navigator>
+          >
+            <Drawer.Screen
+              name={user.tipo === "C" ? "HomeCostumer" : "HomeDriver"}
+              component={user.tipo === "C" ? HomeCostumer : HomeDriver}
+              options={{ title: "Home" }}
+              initialParams={{ user }}
+            />
+            <Drawer.Screen
+              name="NewAd"
+              component={NewAd}
+              initialParams={{ user }}
+              options={{
+                title: "Criar anúncio",
+                headerStyle: {
+                  backgroundColor: "#f4511e",
+                },
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                  fontWeight: "bold",
+                },
+              }}
+            />
+          </Drawer.Navigator>
+          <Stack.Screen name="AdDetail" component={AdDetail} />
+        </>
       )}
     </NavigationContainer>
   );

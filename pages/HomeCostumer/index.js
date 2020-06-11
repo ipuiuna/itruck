@@ -3,16 +3,17 @@ import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Ad from "../../components/Ad";
 import styles from "./style";
+import Firebase from "../../config/firebaseConfig";
 
 const HomeCostumer = (props) => {
   const [list, setList] = useState([]);
-  const [rows, setRows] = useState(props.route.params.user.anuncios);
-  const { id } = props.route.params.user;
+  const { id: userId } = props.route.params.user;
 
   useEffect(() => {
-    if (rows) {
-      setList(rows);
-    }
+    //const getAdsData = FirebaseService.getAdsData(userId);
+    const getAdsData = Firebase.database()
+      .ref(`usuarios/${userId}/anuncios`)
+      .on("value", (snapshot) => setList(snapshot.val()));
   }, []);
 
   return (
@@ -25,14 +26,14 @@ const HomeCostumer = (props) => {
         </Text>
       </View>
       <ScrollView style={styles.wrapper}>
-        {Object.keys(list).length >= 1 ? (
+        {list && Object.keys(list).length ? (
           Object.keys(list).map((item, idx) => (
             <View key={idx}>
               <Ad
-                data={rows[item]}
+                data={list[item]}
                 idItem={item}
                 navigation={props.navigation}
-                userId={id}
+                userId={userId}
               />
             </View>
           ))
@@ -56,7 +57,7 @@ const HomeCostumer = (props) => {
             borderRadius: 64,
           }}
           onPress={() => {
-            props.navigation.navigate("NewAd", { id });
+            props.navigation.navigate("NewAd", { userId });
           }}
         >
           <View style={styles.button}>
