@@ -1,9 +1,9 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, TouchableOpacity, Alert } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./style";
 
-const Ad = (props) => {
+const AdDriver = (props) => {
   const { titulo, destino, origem, peso, quantidade } = props.data;
   return (
     <View
@@ -15,16 +15,24 @@ const Ad = (props) => {
     >
       <View style={styles.container}>
         <Text style={styles.text}>{titulo}</Text>
-        <View style={{ flexDirection: "row" }}>
-          <Icon
-            name="gavel"
-            style={{
-              fontSize: 30,
-              color: "#000",
-              margin: 8,
-            }}
-          />
-        </View>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={{
+            zIndex: 1,
+            margin: 8,
+            height: 30,
+            width: 60,
+            borderRadius: 8,
+            backgroundColor: "#3551B4",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onPress={() => Alert.alert("teste", "teste")}
+        >
+          <View>
+            <Text style={{ color: "#fff" }}>LANCE!</Text>
+          </View>
+        </TouchableOpacity>
       </View>
       <View style={styles.container}>
         <View style={styles.container}>
@@ -43,4 +51,4 @@ const Ad = (props) => {
   );
 };
 
-export default Ad;
+export default AdDriver;

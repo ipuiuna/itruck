@@ -24,7 +24,7 @@ const Ad = (props) => {
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("AdDetail", { idItem });
+              navigation.navigate("AdDetail", { idItem, userId });
             }}
           >
             <Icon

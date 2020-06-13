@@ -7,10 +7,9 @@ import Firebase from "../../config/firebaseConfig";
 
 const HomeCostumer = (props) => {
   const [list, setList] = useState([]);
-  const { id: userId } = props.route.params.user;
+  const { id: userId } = props.route.params;
 
   useEffect(() => {
-    //const getAdsData = FirebaseService.getAdsData(userId);
     const getAdsData = Firebase.database()
       .ref(`usuarios/${userId}/anuncios`)
       .on("value", (snapshot) => setList(snapshot.val()));
@@ -62,6 +61,26 @@ const HomeCostumer = (props) => {
         >
           <View style={styles.button}>
             <Icon style={styles.icon} name="plus" />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={{
+            height: 60,
+            width: 60,
+            borderRadius: 64,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          // onPress={() => {
+          //   {
+          //     setLogin(false);
+          //     setUser({});
+          //   }
+          // }}
+        >
+          <View style={styles.signOutButton}>
+            <Icon style={styles.icon} name="sign-out" />
           </View>
         </TouchableOpacity>
       </View>

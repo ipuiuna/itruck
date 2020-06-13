@@ -1,13 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity, ScrollView } from "react-native";
+import Firebase from "../../config/firebaseConfig";
 import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./style";
 import Bid from "../../components/Bid";
-import mockData from "./mockData";
 
 const AdDetail = (props) => {
-  const idItem = props.route.params?.idItem;
-  console.log("idItem ", idItem);
+  const { idItem, userId } = props.route.params;
+  const [adDetails, setAdDetails] = useState();
+  const [lancesList, setLancesList] = useState();
+
+  const getDetails = () => {
+    Firebase.database()
+      .ref(`usuarios/${userId}/anuncios/${idItem}`)
+      .on("value", (snapshot) => {
+        setAdDetails(snapshot.val());
+      });
+    Firebase.database()
+      .ref(`usuarios/${userId}/anuncios/${idItem}/lances`)
+      .on("value", (snapshot) => {
+        setLancesList(snapshot.val());
+      });
+  };
+
+  useEffect(() => {
+    getDetails();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -17,7 +35,9 @@ const AdDetail = (props) => {
         </Text>
       </View>
       <View style={styles.wrapper}>
-        <Text style={styles.titleSecondarty}>Batata</Text>
+        <Text style={styles.titleSecondarty}>
+          {!adDetails ? "loading" : adDetails.titulo}
+        </Text>
         <View
           style={{
             flex: 0.07,
@@ -26,8 +46,12 @@ const AdDetail = (props) => {
             margin: 8,
           }}
         >
-          <Text style={{ fontSize: 20 }}>Quantidade</Text>
-          <Text style={{ fontSize: 20 }}>Peso</Text>
+          <Text style={{ fontSize: 20 }}>
+            {!adDetails ? "" : adDetails.quantidade}
+          </Text>
+          <Text style={{ fontSize: 20 }}>
+            {!adDetails ? "" : adDetails.peso}
+          </Text>
         </View>
         <View
           style={{
@@ -39,9 +63,13 @@ const AdDetail = (props) => {
             marginBottom: 8,
           }}
         >
-          <Text style={{ fontSize: 20 }}>Ipuiuna</Text>
+          <Text style={{ fontSize: 20 }}>
+            {!adDetails ? "" : adDetails.origem}{" "}
+          </Text>
           <Text style={{ fontSize: 20 }}> -> </Text>
-          <Text style={{ fontSize: 20 }}>Pouso Alegre</Text>
+          <Text style={{ fontSize: 20 }}>
+            {!adDetails ? "" : adDetails.destino}
+          </Text>
         </View>
         <View
           style={{
@@ -67,27 +95,29 @@ const AdDetail = (props) => {
               margin: 8,
             }}
           >
-            {mockData.map((item, idx) => (
-              <View key={idx} style={{ borderRadius: 8 }}>
-                <Bid data={item} />
-              </View>
-            ))}
+            {lancesList && Object.keys(lancesList).length ? (
+              Object.keys(lancesList).map((item, idx) => (
+                <View key={idx}>
+                  <Bid
+                    data={lancesList[item]}
+                    chave={item}
+                    userId={userId}
+                    idItem={idItem}
+                  />
+                </View>
+              ))
+            ) : (
+              <Text
+                style={{
+                  marginTop: 50,
+                  textAlign: "center",
+                }}
+              >
+                Esse anúncio ainda não teve lances.
+              </Text>
+            )}
           </ScrollView>
         </View>
-      </View>
-      <View style={styles.plusButtonArea}>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={{
-            height: 60,
-            width: 60,
-            borderRadius: 64,
-          }}
-        >
-          <View style={styles.button}>
-            <Icon style={styles.icon} name="trash" />
-          </View>
-        </TouchableOpacity>
       </View>
     </View>
   );

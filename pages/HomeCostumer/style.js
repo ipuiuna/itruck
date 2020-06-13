@@ -6,8 +6,9 @@ const styles = StyleSheet.create({
   },
   plusButtonArea: {
     flex: 0.12,
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
+    flexDirection: "row",
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 4,
@@ -22,12 +23,9 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: "#000",
   },
-  markWrap: {
-    flex: 0.1,
-    justifyContent: "flex-end",
-  },
   wrapper: {
     flex: 0.76,
+    marginTop: 8,
     marginLeft: 10,
     marginRight: 10,
   },
@@ -38,6 +36,18 @@ const styles = StyleSheet.create({
     height: 60,
     width: 60,
     borderRadius: 64,
+  },
+  signOutButton: {
+    backgroundColor: "red",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 30,
+    width: 30,
+    borderRadius: 64,
+  },
+  markWrap: {
+    flex: 0.1,
+    justifyContent: "flex-end",
   },
   icon: {
     color: "#FFF",

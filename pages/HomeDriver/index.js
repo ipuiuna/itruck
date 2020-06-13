@@ -7,22 +7,28 @@ import styles from "./style";
 const HomeDriver = (props) => {
   const [list, setList] = useState([]);
 
-  const fetchData = () => {
-    Firebase.database()
-      .ref(`todosanuncios`)
-      .on("value", (snapshot) => {
-        const rows = snapshot.val();
-        const newList = [];
-        Object.keys(rows).map((key) => {
-          newList.push(rows[key]);
-        });
-        setList(newList);
-      });
-  };
-
   useEffect(() => {
-    fetchData();
-  }, [list]);
+    const getAdsData = Firebase.database()
+      .ref(`todosanuncios`)
+      .on("value", (snapshot) => setList(snapshot.val()));
+  }, []);
+
+  // const fetchData = () => {
+  //   Firebase.database()
+  //     .ref(`todosanuncios`)
+  //     .on("value", (snapshot) => {
+  //       const rows = snapshot.val();
+  //       const newList = [];
+  //       Object.keys(rows).map((key) => {
+  //         newList.push(rows[key]);
+  //       });
+  //       setList(newList);
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, [list]);
 
   return (
     <View style={styles.container}>
@@ -33,11 +39,17 @@ const HomeDriver = (props) => {
         </Text>
       </View>
       <ScrollView style={styles.wrapper}>
-        {list.map((item, idx) => (
-          <View key={idx}>
-            <AdDriver data={item} />
-          </View>
-        ))}
+        {list && Object.keys(list).length ? (
+          Object.keys(list).map((item, idx) => (
+            <View key={idx}>
+              <View key={idx}>
+                <AdDriver data={list[item]} />
+              </View>
+            </View>
+          ))
+        ) : (
+          <Text>Carregando anúncios</Text>
+        )}
       </ScrollView>
     </View>
   );

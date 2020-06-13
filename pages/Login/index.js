@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import Firebase from "../../config/firebaseConfig";
 import styles from "./style";
-import FirebaseService from "../../services/firebase.services";
 
 export default function LoginScreen(props) {
   const { navigation } = props;
-  const [email, setEmail] = useState(__DEV__ ? "eu@aqui.com.br" : "");
+  const [email, setEmail] = useState(__DEV__ ? "caminhoneiro@eu.com.br" : "");
   const [password, setPassword] = useState(__DEV__ ? "123456789" : "");
 
   const handleLogin = () => {
