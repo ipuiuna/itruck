@@ -1,10 +1,13 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import Firebase from "../../config/firebaseConfig";
 import styles from "./style";
 
 const Bid = (props) => {
+  const { chave, userId, idItem } = props;
   const { nome, valor } = props.data;
+
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row" }}>
@@ -23,14 +26,22 @@ const Bid = (props) => {
             margin: 8,
           }}
         />
-        <Icon
-          name="trash"
-          style={{
-            fontSize: 30,
-            color: "red",
-            margin: 8,
+        <TouchableOpacity
+          onPress={() => {
+            Firebase.database()
+              .ref(`usuarios/${userId}/anuncios/${idItem}/lances/${chave}`)
+              .remove();
           }}
-        />
+        >
+          <Icon
+            name="trash-o"
+            style={{
+              fontSize: 30,
+              color: "red",
+              margin: 8,
+            }}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );
