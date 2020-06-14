@@ -4,15 +4,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  plusButtonArea: {
-    flex: 0.12,
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 4,
-    marginTop: 4,
-  },
   titlePrimary: {
     fontSize: 30,
     color: "#3551B4",
@@ -26,22 +17,30 @@ const styles = StyleSheet.create({
     flex: 0.1,
     justifyContent: "flex-end",
   },
-  wrapper: {
-    flex: 0.76,
-    marginLeft: 10,
-    marginRight: 10,
+  inputWrap: {
+    flexDirection: "row",
+    marginVertical: 10,
+    height: 40,
+    borderBottomWidth: 1,
+    borderBottomColor: "#CCC",
+    margin: 30,
+    marginTop: 40,
+  },
+  input: {
+    flex: 1,
+    textAlign: "center",
+    fontSize: 25,
   },
   button: {
-    backgroundColor: "#3551B4",
     alignItems: "center",
-    justifyContent: "center",
-    height: 60,
-    width: 60,
-    borderRadius: 64,
   },
-  icon: {
+  buttonText: {
     color: "#FFF",
-    fontSize: 20,
+    textAlign: "center",
+    fontSize: 18,
+  },
+  inputs: {
+    flex: 65,
   },
 });
 
