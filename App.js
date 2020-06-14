@@ -43,7 +43,6 @@ function ProfileStackScreen() {
 const Tab = createBottomTabNavigator();
 
 function HomeTabs(props) {
-  console.log("home tas param ", props);
   const { user } = props.route.params;
 
   return (

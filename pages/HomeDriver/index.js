@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, TouchableOpacity, ScrollView } from "react-native";
+import { Text, View, ScrollView } from "react-native";
 import Firebase from "../../config/firebaseConfig";
 import AdDriver from "../../components/AdDriver";
 import styles from "./style";
 
 const HomeDriver = (props) => {
+  console.log("props homedriver", props);
+  const { id } = props.route.params;
   const [list, setList] = useState([]);
 
   useEffect(() => {
@@ -12,23 +14,6 @@ const HomeDriver = (props) => {
       .ref(`todosanuncios`)
       .on("value", (snapshot) => setList(snapshot.val()));
   }, []);
-
-  // const fetchData = () => {
-  //   Firebase.database()
-  //     .ref(`todosanuncios`)
-  //     .on("value", (snapshot) => {
-  //       const rows = snapshot.val();
-  //       const newList = [];
-  //       Object.keys(rows).map((key) => {
-  //         newList.push(rows[key]);
-  //       });
-  //       setList(newList);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, [list]);
 
   return (
     <View style={styles.container}>
@@ -43,7 +28,7 @@ const HomeDriver = (props) => {
           Object.keys(list).map((item, idx) => (
             <View key={idx}>
               <View key={idx}>
-                <AdDriver data={list[item]} />
+                <AdDriver data={list[item]} adId={item} driverId={id} />
               </View>
             </View>
           ))

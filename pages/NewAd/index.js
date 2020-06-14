@@ -12,6 +12,7 @@ export default function NewAd(props) {
     quantidade: "",
     origem: "",
     destino: "",
+    adOwner: userId,
   });
 
   const insertNewAd = async () => {
@@ -24,7 +25,6 @@ export default function NewAd(props) {
     ) {
       Alert.alert("Erro", "Preencha todos dados");
     } else {
-      console.log("userid para novo anuncio: ", userId);
       const key = await Firebase.database()
         .ref(`usuarios/${userId}/anuncios`)
         .push(newAd)
