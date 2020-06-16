@@ -6,6 +6,7 @@ import styles from "./style";
 import Bid from "../../components/Bid";
 
 const AdDetail = (props) => {
+  // console.log("props on details", props.navigation);
   const { idItem, userId } = props.route.params;
   const [adDetails, setAdDetails] = useState();
   const [lancesList, setLancesList] = useState();
@@ -103,6 +104,7 @@ const AdDetail = (props) => {
                     chave={item}
                     userId={userId}
                     idItem={idItem}
+                    adDetails={adDetails}
                   />
                 </View>
               ))

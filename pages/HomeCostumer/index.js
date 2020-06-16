@@ -7,7 +7,7 @@ import Firebase from "../../config/firebaseConfig";
 
 const HomeCostumer = (props) => {
   const [list, setList] = useState([]);
-  const { id: userId } = props.route.params;
+  const { id: userId, setLogin, setUser } = props.route.params;
 
   useEffect(() => {
     const getAdsData = Firebase.database()
@@ -72,12 +72,12 @@ const HomeCostumer = (props) => {
             alignItems: "center",
             justifyContent: "center",
           }}
-          // onPress={() => {
-          //   {
-          //     setLogin(false);
-          //     setUser({});
-          //   }
-          // }}
+          onPress={() => {
+            {
+              setLogin(false);
+              setUser({});
+            }
+          }}
         >
           <View style={styles.signOutButton}>
             <Icon style={styles.icon} name="sign-out" />

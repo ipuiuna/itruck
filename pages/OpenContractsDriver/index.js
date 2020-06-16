@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, ScrollView } from "react-native";
 import Firebase from "../../config/firebaseConfig";
-import AdDriver from "../../components/AdDriver";
+import AdDriverOpen from "../../components/AdDriverOpen";
 import styles from "./style";
 
-const HomeDriver = (props) => {
-  const { id } = props.route.params;
+const OpenContractsDriver = (props) => {
+  const { id } = props.route.params.user;
   const [list, setList] = useState([]);
 
   useEffect(() => {
     const getAdsData = Firebase.database()
-      .ref(`todosanuncios`)
+      .ref(`usuarios/${id}/contratosabertos`)
       .on("value", (snapshot) => setList(snapshot.val()));
   }, []);
 
@@ -19,7 +19,7 @@ const HomeDriver = (props) => {
       <View style={styles.markWrap}>
         <Text style={styles.titlePrimary}>
           <Text style={styles.titlePrimary}> A</Text>
-          <Text style={styles.titleSecondarty}>núncios</Text>
+          <Text style={styles.titleSecondarty}>bertos</Text>
         </Text>
       </View>
       <ScrollView style={styles.wrapper}>
@@ -27,7 +27,7 @@ const HomeDriver = (props) => {
           Object.keys(list).map((item, idx) => (
             <View key={idx}>
               <View key={idx}>
-                <AdDriver data={list[item]} adId={item} driverId={id} />
+                <AdDriverOpen data={list[item]} adId={item} driverId={id} />
               </View>
             </View>
           ))
@@ -39,4 +39,4 @@ const HomeDriver = (props) => {
   );
 };
 
-export default HomeDriver;
+export default OpenContractsDriver;
