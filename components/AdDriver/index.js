@@ -10,6 +10,7 @@ const AdDriver = (props) => {
   const { adId, driverId } = props;
   const [showModal, setShowModal] = useState(false);
   const [nomeMotorista, setNomeMotorista] = useState("");
+  const [telefoneMotorista, setTelefoneMotorista] = useState("não cadastrado");
   const [lance, setLance] = useState("");
 
   useEffect(() => {
@@ -17,6 +18,13 @@ const AdDriver = (props) => {
       .ref(`usuarios/${driverId}/nome`)
       .on("value", (snapshot) => {
         setNomeMotorista(snapshot.val());
+      });
+    Firebase.database()
+      .ref(`usuarios/${driverId}/celular`)
+      .on("value", (snapshot) => {
+        if (snapshot.val()) {
+          setTelefoneMotorista(snapshot.val());
+        } else setTelefoneMotorista("não cadastrado");
       });
   }, [nomeMotorista]);
 
@@ -42,6 +50,7 @@ const AdDriver = (props) => {
               />
               <View style={{ flexDirection: "row" }}>
                 <TouchableOpacity
+                  activeOpacity={0.5}
                   style={{
                     ...styles.openButton,
                     backgroundColor: "#3551B4",
@@ -54,6 +63,7 @@ const AdDriver = (props) => {
                         nome: nomeMotorista,
                         valor: lance,
                         userId: driverId,
+                        celular: telefoneMotorista,
                       });
                     setShowModal(!showModal);
                   }}
@@ -61,6 +71,7 @@ const AdDriver = (props) => {
                   <Text style={styles.textStyle}>Dar lance!</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                  activeOpacity={0.5}
                   style={{
                     ...styles.openButton,
                     backgroundColor: "red",

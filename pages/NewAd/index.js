@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import Firebase from "../../config/firebaseConfig";
 import styles from "./style";
 
 export default function NewAd(props) {
   const { userId } = props.route.params;
-  console.log("props:>>>>> ", props);
   const [newAd, setNewAd] = useState({
     titulo: "",
     peso: "",

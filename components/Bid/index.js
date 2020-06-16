@@ -1,32 +1,69 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Firebase from "../../config/firebaseConfig";
 import styles from "./style";
+import { useNavigation } from "@react-navigation/native";
 
 const Bid = (props) => {
   const { chave, userId, idItem } = props;
-  const { nome, valor } = props.data;
+  const { nome, valor, userId: driverId } = props.data;
+  const [ad, setAd] = useState();
+  const navigation = useNavigation();
+  useEffect(() => {
+    const getAdsData = Firebase.database()
+      .ref(`usuarios/${userId}/anuncios/${idItem}`)
+      .on("value", (snapshot) => setAd(snapshot.val()));
+  }, []);
+
+  const newContractCreation = () => {
+    Firebase.database().ref(`todosanuncios/${idItem}`).remove();
+    Firebase.database()
+      .ref(`usuarios/${userId}/anuncios/${idItem}/lances`)
+      .remove();
+    Firebase.database()
+      .ref(`usuarios/${userId}/contratosabertos/${idItem}`)
+      .set(ad);
+    Firebase.database()
+      .ref(`usuarios/${driverId}/contratosabertos/${idItem}`)
+      .set(ad);
+    Firebase.database()
+      .ref(`usuarios/${driverId}/contratosabertos/${idItem}/lances`)
+      .remove();
+    Firebase.database()
+      .ref(`usuarios/${userId}/contratosabertos/${idItem}/lances`)
+      .remove();
+    Firebase.database().ref(`usuarios/${userId}/anuncios/${idItem}`).remove();
+    navigation.navigate("Home");
+  };
 
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row" }}>
         <Text style={styles.text}>{nome} -></Text>
         <Text style={styles.text}>
-          R$ {valor.toFixed(2).toString().replace(".", ",")}
+          R$ {(+valor).toFixed(2).toString().replace(".", ",")}
         </Text>
       </View>
 
       <View style={{ flexDirection: "row" }}>
-        <Icon
-          name="check"
-          style={{
-            fontSize: 30,
-            color: "#a6f87e",
-            margin: 8,
-          }}
-        />
         <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => {
+            newContractCreation();
+          }}
+        >
+          <Icon
+            name="check"
+            style={{
+              fontSize: 30,
+              color: "#a6f87e",
+              margin: 8,
+            }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.5}
           onPress={() => {
             Firebase.database()
               .ref(`usuarios/${userId}/anuncios/${idItem}/lances/${chave}`)

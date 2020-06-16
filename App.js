@@ -9,6 +9,8 @@ import UserRegistration from "./pages/UserRegistration";
 import HomeDriver from "./pages/HomeDriver";
 import NewAd from "./pages/NewAd";
 import AdDetail from "./pages/AdDetail";
+import OpenContractsDriver from "./pages/OpenContractsDriver";
+import OpenContractsCostumer from "./pages/OpenContractsCostumer";
 
 function ProfileScreen() {
   return <View />;
@@ -17,7 +19,7 @@ function ProfileScreen() {
 const FeedStack = createStackNavigator();
 
 function FeedStackScreen(props) {
-  const { id, tipo } = props.route.params;
+  const { id, tipo } = props.route.params.user;
   return (
     <FeedStack.Navigator headerMode="none">
       <FeedStack.Screen
@@ -43,16 +45,22 @@ function ProfileStackScreen() {
 const Tab = createBottomTabNavigator();
 
 function HomeTabs(props) {
-  const { user } = props.route.params;
+  const { user, setLogin, setUser } = props.route.params;
 
   return (
     <Tab.Navigator>
       <Tab.Screen
         name={user.tipo === "C" ? "Meus Anúncios" : "Anuncios"}
         component={FeedStackScreen}
-        initialParams={user}
+        initialParams={{ user, setUser, setLogin }}
       />
-      <Tab.Screen name="Em Aberto" component={ProfileStackScreen} />
+      <Tab.Screen
+        name="Em Aberto"
+        component={
+          user.tipo === "C" ? OpenContractsCostumer : OpenContractsDriver
+        }
+        initialParams={{ user }}
+      />
       <Tab.Screen name="Concluídos" component={ProfileStackScreen} />
     </Tab.Navigator>
   );
@@ -87,7 +95,7 @@ export default function App() {
             <RootStack.Screen
               name="Home"
               component={HomeTabs}
-              initialParams={{ user }}
+              initialParams={{ user, setLogin, setUser }}
             />
             <RootStack.Screen
               name="NewAd"
