@@ -5,7 +5,6 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import Firebase from "../../config/firebaseConfig";
 
 const AdDriverOpen = (props) => {
-  console.log("addriver info: ", props);
   const { titulo, destino, origem, peso, quantidade, adOwner } = props.data;
   const { adId, driverId } = props;
 

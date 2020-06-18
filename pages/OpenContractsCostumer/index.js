@@ -5,7 +5,6 @@ import AdCostumerOpen from "../../components/AdCostumerOpen";
 import styles from "./style";
 
 const OpenContractsCostumer = (props) => {
-  console.log("props: ", props);
   const { id } = props.route.params.user;
   const [list, setList] = useState([]);
 

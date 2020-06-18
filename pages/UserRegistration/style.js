@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     color: "#000",
   },
   markWrap: {
-    marginBottom: 50,
+    marginTop: 50,
     justifyContent: "flex-end",
   },
   mark: {
