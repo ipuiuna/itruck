@@ -11,12 +11,16 @@ const Bid = (props) => {
   const [ad, setAd] = useState();
   const navigation = useNavigation();
   useEffect(() => {
-    const getAdsData = Firebase.database()
+    Firebase.database()
       .ref(`usuarios/${userId}/anuncios/${idItem}`)
-      .on("value", (snapshot) => setAd(snapshot.val()));
+      .on("value", (snapshot) => {
+        setAd(snapshot.val());
+      });
+    setAd({ ...ad, driverId: driverId });
   }, []);
 
   const newContractCreation = () => {
+    console.log("ad depois de aceitar o contrato: ", ad);
     Firebase.database().ref(`todosanuncios/${idItem}`).remove();
     Firebase.database()
       .ref(`usuarios/${userId}/anuncios/${idItem}/lances`)

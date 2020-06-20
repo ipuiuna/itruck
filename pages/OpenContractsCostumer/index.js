@@ -12,7 +12,6 @@ const OpenContractsCostumer = (props) => {
     var query = Firebase.database().ref(`usuarios/${id}/contratosabertos`);
     query.on("value", (dataSnapshot) => {
       const valores = dataSnapshot.val();
-      // console.log("valores, ", valores);
       if (valores)
         Object.keys(valores).map((item) => {
           const provItem = valores[item];
