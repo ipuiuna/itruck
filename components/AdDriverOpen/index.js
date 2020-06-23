@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, Linking } from "react-native";
 import styles from "./style";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import Firebase from "../../config/firebaseConfig";
@@ -53,6 +53,11 @@ const AdDriverOpen = (props) => {
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.5}
+              onPress={() =>
+                Linking.openURL(
+                  `https://www.google.com/maps/dir/?api=1&origin=${origem}&destination=${destino}`
+                )
+              }
               style={{
                 margin: 8,
                 height: 30,

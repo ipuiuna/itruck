@@ -5,7 +5,7 @@ import styles from "./style";
 
 export default function LoginScreen(props) {
   const { navigation } = props;
-  const [email, setEmail] = useState(__DEV__ ? "robertinho@eu.com" : "");
+  const [email, setEmail] = useState(__DEV__ ? "eu@aqui.com.br" : "");
   const [password, setPassword] = useState(__DEV__ ? "123456789" : "");
 
   const handleLogin = () => {

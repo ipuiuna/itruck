@@ -99,12 +99,12 @@ const AdDetail = (props) => {
             {lancesList && Object.keys(lancesList).length ? (
               Object.keys(lancesList).map((item, idx) => (
                 <View key={idx}>
+                  {/* {console.log("lancesList[item]: ", lancesList[item])} */}
                   <Bid
                     data={lancesList[item]}
                     chave={item}
                     userId={userId}
                     idItem={idItem}
-                    adDetails={adDetails}
                   />
                 </View>
               ))
