@@ -12,10 +12,10 @@ const OpenContractsCostumer = (props) => {
     var query = Firebase.database().ref(`usuarios/${id}/contratosabertos`);
     query.on("value", (dataSnapshot) => {
       const valores = dataSnapshot.val();
-      // console.log("valores, ", valores);
       if (valores)
         Object.keys(valores).map((item) => {
           const provItem = valores[item];
+          console.log("datasnapshot: ", provItem);
           if (provItem.okCostumer && provItem.okDriver) {
             Firebase.database()
               .ref(`usuarios/${provItem.adOwner}/contratosfechados/${item}`)
@@ -23,15 +23,14 @@ const OpenContractsCostumer = (props) => {
             Firebase.database()
               .ref(`usuarios/${provItem.driverId}/contratosfechados/${item}`)
               .set(provItem);
+
+            console.log("item provisorio: ", provItem.driverId);
             Firebase.database()
               .ref(`usuarios/${provItem.adOwner}/contratosabertos/${item}`)
               .remove();
             Firebase.database()
               .ref(`usuarios/${provItem.driverId}/contratosabertos/${item}`)
               .remove();
-            console.log(
-              `usuarios/${provItem.driverId}/contratosabertos/${item}`
-            );
           }
         });
     });

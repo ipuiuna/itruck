@@ -42,10 +42,6 @@ export default function UserRegistration() {
       });
   };
 
-  // useEffect(() => {
-  //   console.log("caminhoneiro", isDriver);
-  // });
-
   return (
     <View style={styles.container}>
       <View style={styles.markWrap}>

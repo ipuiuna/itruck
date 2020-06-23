@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
+import ClosedContracts from "./pages/ClosedContracts";
 import HomeCostumer from "./pages/HomeCostumer";
 import Login from "./pages/Login";
 import UserRegistration from "./pages/UserRegistration";
@@ -61,7 +62,11 @@ function HomeTabs(props) {
         }
         initialParams={{ user }}
       />
-      <Tab.Screen name="Concluídos" component={ProfileStackScreen} />
+      <Tab.Screen
+        name="Concluídos"
+        component={ClosedContracts}
+        initialParams={{ user }}
+      />
     </Tab.Navigator>
   );
 }

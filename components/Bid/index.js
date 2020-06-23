@@ -6,14 +6,19 @@ import styles from "./style";
 import { useNavigation } from "@react-navigation/native";
 
 const Bid = (props) => {
+  console.log("props bids: ", props);
   const { chave, userId, idItem } = props;
   const { nome, valor, userId: driverId } = props.data;
   const [ad, setAd] = useState();
   const navigation = useNavigation();
+
+  console.log("driver id: ", driverId);
   useEffect(() => {
-    const getAdsData = Firebase.database()
+    Firebase.database()
       .ref(`usuarios/${userId}/anuncios/${idItem}`)
-      .on("value", (snapshot) => setAd(snapshot.val()));
+      .on("value", (snapshot) => {
+        setAd(snapshot.val());
+      });
   }, []);
 
   const newContractCreation = () => {
@@ -24,6 +29,9 @@ const Bid = (props) => {
     Firebase.database()
       .ref(`usuarios/${userId}/contratosabertos/${idItem}`)
       .set(ad);
+    Firebase.database()
+      .ref(`usuarios/${userId}/contratosabertos/${idItem}`)
+      .update({ driverId: driverId });
     Firebase.database()
       .ref(`usuarios/${driverId}/contratosabertos/${idItem}`)
       .set(ad);
